@@ -1,0 +1,28 @@
+使用Modelsim进行仿真
+
+	1.设置顶层文件
+		顶层文件与顶层模块的名字必须相同
+		
+	2.确认是否添加ModelSim进入Quartus
+		选择EDA Tools Settings
+		选择界面倒数第四行Compile test bench  -->  单击 Test Benches...
+		
+		进入界面后单击"new"
+		填写Test Bench name   //<< Testbench的文件名(*.vt)
+		填写Top level module in test bench //<< 填写顶层模块名字(*.v  的模块)
+		单击选择 use test bench to perform VHDL timming simulation
+		填写 Designed instance name in test bench:   填写Testbench中  实例化顶层文件模块的名字
+		举例:
+		顶层文件名字Test.v    顶层模块名字 Test(input,clk,out)
+		Testbench文件名字Test.vt  
+		Testbench实例化模块Test testbv{
+			input(input),
+			clk(clk),
+			out(out)	//此处不可以有逗号！！！  经常忘记多加逗号
+		};
+		
+		那么  填写 Designed instance name in test bench  框应该填写 testbv
+
+
+		
+		

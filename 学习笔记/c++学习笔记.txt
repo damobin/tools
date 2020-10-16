@@ -1,0 +1,14 @@
+8.2  文件的输入输出的关联
+输入流和输出流应该进行关联
+cin.tie(cout)
+这样的效果为
+当文件进行输入的情形下,会将输出从BUFF中打印出来
+
+8.2 文件的输入输出测试代码
+getline(fstream,string)
+可以读取一行数据存储到string的数据类型中
+
+for(int i = 0 ;i<[vector].size();i++){
+	[vector].erase([vector].begin);
+	执行结束后会更新[vector].size()
+}

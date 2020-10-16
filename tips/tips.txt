@@ -1,0 +1,171 @@
+1.在编写游程压缩编码过程中
+	在读取二进制文件的过程中如果读取到数值0x0A
+	那么二进制文件会使用 
+	0x86 0x0D 0x0A 
+	0x0D 0x0A 0x0D		表示0x0A  使用0D作为转义字符 0D 与0A的组合表示0A
+	0x0A 0x99 0x0D
+	的方式存储0x0A
+
+
+2.在调用C的map对应的红黑树过程中,有
+	typeof关键字
+	typeof可以返回对应表达式的数据类型
+	typeof(get_apple_info()) r1;//定义一个变量r1,用于接收函数get_apple_info()返回的值
+
+3.GDB的调试
+	使用display显示变量undisplay取消变量显示,(p 变量)
+	使用watch跟踪变量
+	使用step/s进入子函数
+	使用n走到下一步,next 10执行10行代码
+	使用break 行号 设置断点(b 函数名  在函数入口设置断点)
+	使用disable/enable使能或者失能断点
+	使用clear Functionname清除函数里的多有断点,使用clear Line清除行里的多有断点
+	使用r运行程序
+	使用finish跳出子函数
+	使用return num数值  从子函数退出
+	使用until在一个循环体内单步退出循环体。
+	使用c/continue 继续执行,跳转到下一个断点
+	使用list n显示n行代码,使用list -回显代码(l 行数  l -回显)
+	使用info watchpoints列出所有的观察点,rwatch读取时暂停,awatch写入暂停
+	使用set args PARAM0 PARAM1		给函数传递参数
+
+	在gdb中调用shell命令,方式为 shell "cmd"
+	举例:shell clear清除屏幕
+
+
+	使用GDB的脚本文件调试的时候输入的命令为source  source.gdb     (*.gdb文件为调试的脚本文件)
+	/******************************************/
+	删除watch的方法
+	步骤1: 先使用info watchpoints查看所有的watch point,获取watch point的Num值,data的Num值为2
+		(gdb) info watchpoints
+		Num     Type           Disp Enb Address            What
+		2       hw watchpoint  keep y                      data
+	步骤2: 使用delete删除 2
+		(gdb) delete 2
+	成功删除watch
+	以上方法可以用于删除break point
+	！！！！！！！！！！！！！！！！但是不可删除		display value  需要使用undisplay删除
+	/******************************************/
+	直接读取内存
+	x/3uh 0x408030 从内存地址0x408030读取内容，h表示以双字节为一个单位，3表示输出三个单位，u表示按十六进制显示。
+	x/3uh &tree
+	0x408030 <tree>:        8256    51      0
+
+	(gdb) x/5cb 0x5720e0	显示ASCII码
+	0x5720e0:       119 'w' 111 'o' 114 'r' 108 'l' 100 'd'
+	b 表示单字节
+	h 表示双字节
+	w 表示四字 节
+	g 表示八字节
+
+	x 按十六进制格式显示变量。
+	d 按十进制格式显示变量。
+	u 按十六进制格式显示无符号整型。
+	o 按八进制格式显示变量。
+	t 按二进制格式显示变量。
+	a 按十六进制格式显示变量。
+	c 按字符格式显示变量。
+	f 按浮点数格式显示变量。
+
+
+4.gitlab使用介绍
+	1.创建分支
+		a.创建新的分支,继承父分支
+			git branch "分支名字"
+		b.复制新的分支
+			git checkout -b "分支名字"
+		c.创建一个新的空的分支
+			git checkout --orphan "分支名字"
+			如果出现错误继续
+			c1.git clean -d -fx
+			c2.git checkout --orphan "分支名字"
+			c3.git rm -rf .
+			<c3_5.git add README.md>
+			c4.git commit -m "提交信息"
+			c5.git push origin "分支名字"
+			c6.git add README.md
+			c7.git commit -m "提交信息"
+			c8.git push origin "分支名字"
+	2.切换到新的分支
+			git checkout "分支名字"
+			
+	//<<<平时的应用
+	3.将主分支的代码的改变，推送到新创建的分支上(也可以用作两个不同分支的合并)
+	//假设主分支名字为 		master
+	//假设新建分支名字为 	newbranch
+	具体操作为:
+		a.保证主分支master已经提交过(git add .     git commit -m "XXX"  git push)
+		b.切换到新的分支(git checkout newbranch)
+		c.合并分支(git merge master)//当前位置为newbranch位置   使用master合并到newbranch
+		d.提交newbranch的修改
+		
+	4.反做旧版本，指的是在版本的列表后边,复制旧的(目标版本),这样可以保存所有的版本信息(优先使用4)
+		a.git log查看之前提交的版本号，以及版本信息(也就是git commit -m "信息")
+		b.git revert -n "目标版本号"
+		c.git commit -m "新重做版本的commit信息"
+		d.git log			确认新生产的版本
+		c.git push			提交更改
+
+	5.回退版本(reset ),指的是已经执行过git push的回退(慎用,一旦回退,那么回退之后的版本会彻底消失)
+	具体操作为:
+		a.git log查看之前提交的版本号，以及版本信息(也就是git commit -m "信息")
+		b.git reset --hard "目标版本号"
+		c.git push -f提交更改
+
+	6.撤销没有git add .的修改,所有新加或者删除的代码都会被去掉
+		git checkout "文件名file"		//执行操作后file之前,添加或者删除的代码会消失
+		
+	7.撤销git add .的提交
+		a.git reset HEAD "文件名file"	//文件的修改还是存在
+		b.git checkout "文件名file"		//执行操作后file之前,添加或者删除的代码会消失
+	8.撤销git commit -m "XXX"的修改
+		a.git reset HEAD^
+		b.git checkout "文件名file"		//执行操作后file之前,添加或者删除的代码会消失
+
+	9.删除git pull之后,分支信息后边出现杂吾尾巴
+		git rebase --abort
+
+	10.git reflog可以查找强硬修改的log(配合5使用)
+
+	11.使用旧版本代码,将旧版本代码新建立分支
+		git checkout -b New_Branch_Name History_Log
+	linux文件解压介绍
+
+
+5.makefile如何传递全局宏
+	1.通过make命令传递   
+		make "DEBUG=1"   可以传递全局宏 DEBUG =1
+	2.使用gcc -DDEBUG ... 传递传递宏定义DEBUG 
+	3.$@--目标文件，$^--所有的依赖文件，$<--第一个依赖文件。
+
+
+
+
+note:为了读取string的list中的元素，应该使用什么类型？如果写入list又该用什么类型？
+
+为了读取string的list中的元素，应使用list<string>::valus_type，
+写入数据需要引用类型，使用list<string>::reference。
+
+
+//在很多个文本文件中查找指定的字段的shell命令
+
+find . | xargs | grep --color=auto -n "RCC_AHB1PeriphResetCmd" -R
+
+
+//在ECC加密算法中有模的除法以及除法的逆元
+简要说明除法逆元
+2^(-1) mod 23      
+2 * 2 ^(-1)  = 1 mod 23
+有关系为    2 * 2 ^(-1)  = 23 + 1 mod 23  = 24 mod 23
+两边除以2   有  2 ^(-1)  = 12     mod 23
+5^(-1) mod 23
+有          5 * 5^(-1)   = 23*3 + 1 mod 23  = 70 mod 23
+两边除以5   有  5^(-1)   = 14     mod 23
+
+
+
+
+
+
+
+
