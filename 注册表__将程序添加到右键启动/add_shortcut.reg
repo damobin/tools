@@ -1,26 +1,26 @@
 Windows Registry Editor Version 5.00
 
-[HKEY_CLASSES_ROOT\*\shell\VSCode]
-@="Open with Code"
-"Icon"="F:\\soft\\VSCODE\\Code.exe"
+[HKEY_CLASSES_ROOT\*\shell\PEiD]
+@="PEID"
+"Icon"="E:\\mobin\\PEiD0.95\\PEiD0.95.exe"
 
-[HKEY_CLASSES_ROOT\*\shell\VSCode\command]
-@="\"F:\\soft\\VSCODE\\Code.exe\" \"%1\""
-
-Windows Registry Editor Version 5.00
-
-[HKEY_CLASSES_ROOT\Directory\shell\VSCode]
-@="Open with Code"
-"Icon"="F:\\soft\\VSCODE\\Code.exe"
-
-[HKEY_CLASSES_ROOT\Directory\shell\VSCode\command]
-@="\"F:\\soft\\VSCODE\\Code.exe\" \"%V\""
+[HKEY_CLASSES_ROOT\*\shell\PEiD\command]
+@="\"E:\\mobin\\PEiD0.95\\PEiD0.95.exe\" \"%1\""
 
 Windows Registry Editor Version 5.00
 
-[HKEY_CLASSES_ROOT\Directory\Background\shell\VSCode]
-@="Open with Code"
-"Icon"="F:\\soft\\VSCODE\\Code.exe"
+[HKEY_CLASSES_ROOT\Directory\shell\PEiD]
+@="PEID"
+"Icon"="E:\\mobin\\PEiD0.95\\PEiD0.95.exe"
 
-[HKEY_CLASSES_ROOT\Directory\Background\shell\VSCode\command]
-@="\"F:\\soft\\VSCODE\\Code.exe\" \"%V\""
+[HKEY_CLASSES_ROOT\Directory\shell\PEiD\command]
+@="\"E:\\mobin\\PEiD0.95\\PEiD0.95.exe\" \"%V\""
+
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\PEiD]
+@="PEID"
+"Icon"="E:\\mobin\\PEiD0.95\\PEiD0.95.exe"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\PEiD\command]
+@="\"E:\\mobin\\PEiD0.95\\PEiD0.95.exe\" \"%V\""
